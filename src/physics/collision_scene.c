@@ -707,7 +707,7 @@ void collisionSceneWalkBroadphase(struct CollisionScene* collisionScene, struct 
     }
 }
 
-void collisionSceneUpdateObjectCurrentRooms(struct Vector3* prevPosList){
+void collisionSceneUpdateObjectCurrentRooms(struct CollisionScene* collisionScene, struct Vector3* prevPosList){
     for (unsigned i = 0; i < gCollisionScene.dynamicObjectCount; ++i) {
         int doorwayMask = worldCheckDoorwaySides(collisionScene->world, &prevPosList[i], gCollisionScene.dynamicObjects[i]->body->currentRoom);
         gCollisionScene.dynamicObjects[i]->body->currentRoom = worldCheckDoorwayCrossings(collisionScene->world, &gCollisionScene.dynamicObjects[i]->body->transform.position, gCollisionScene.dynamicObjects[i]->body->currentRoom, doorwayMask);
@@ -730,7 +730,7 @@ void collisionSceneCollideDynamicPairs(struct CollisionScene* collisionScene, st
 
     collisionSceneWalkBroadphase(collisionScene, &dynamicBroadphase, prevPos, sweptBB);
 
-    collisionSceneUpdateObjectCurrentRooms(prevPos);
+    collisionSceneUpdateObjectCurrentRooms(collisionScene, prevPos);
 
     stackMallocFree(dynamicBroadphase.objectsInCurrentRange);
     stackMallocFree(dynamicBroadphase.edges);
