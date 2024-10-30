@@ -6,7 +6,6 @@
 #include "contact_solver.h"
 #include "../util/memory.h"
 #include "../scene/portal.h"
-#include "../levels/levels.h"
 
 struct CollisionScene gCollisionScene;
 
@@ -710,8 +709,8 @@ void collisionSceneWalkBroadphase(struct CollisionScene* collisionScene, struct 
 
 void collisionSceneUpdateObjectCurrentRooms(struct Vector3* prevPosList){
     for (unsigned i = 0; i < gCollisionScene.dynamicObjectCount; ++i) {
-        int doorwayMask = worldCheckDoorwaySides(&gCurrentLevel->world, &prevPosList[i], gCollisionScene.dynamicObjects[i]->body->currentRoom);
-        gCollisionScene.dynamicObjects[i]->body->currentRoom = worldCheckDoorwayCrossings(&gCurrentLevel->world, &gCollisionScene.dynamicObjects[i]->body->transform.position, gCollisionScene.dynamicObjects[i]->body->currentRoom, doorwayMask);
+        int doorwayMask = worldCheckDoorwaySides(collisionScene->world, &prevPosList[i], gCollisionScene.dynamicObjects[i]->body->currentRoom);
+        gCollisionScene.dynamicObjects[i]->body->currentRoom = worldCheckDoorwayCrossings(collisionScene->world, &gCollisionScene.dynamicObjects[i]->body->transform.position, gCollisionScene.dynamicObjects[i]->body->currentRoom, doorwayMask);
     }
 }
 
